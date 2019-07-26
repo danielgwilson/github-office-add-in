@@ -85,6 +85,9 @@ module.exports = async (env, options) => {
           ? options.https
           : await devCerts.getHttpsServerOptions(),
       port: process.env.npm_package_config_dev_server_port || 3000
+    },
+    output: {
+      publicPath: "/github-office-add-in/"
     }
   };
 

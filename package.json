@@ -28,11 +28,13 @@
     "unload": "office-toolbox remove -m manifest.xml -a excel",
     "unload:excel": "office-toolbox remove -m manifest.xml -a excel",
     "validate": "office-toolbox validate -m manifest.xml",
-    "watch": "webpack --mode development --watch"
+    "watch": "webpack --mode development --watch",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "@octokit/request": "^5.0.2",
     "@octokit/rest": "^16.28.6",
+    "gh-pages": "^2.0.1",
     "react": "^16.8.6"
   },
   "devDependencies": {
