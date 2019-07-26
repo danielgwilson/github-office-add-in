@@ -1,0 +1,42 @@
+{
+    "functions": [
+        {
+            "description": "Gets the number of issues for a particular repo given some search parameters.",
+            "id": "ISSUECOUNTFORREPO",
+            "name": "ISSUECOUNTFORREPO",
+            "parameters": [
+                {
+                    "name": "repo",
+                    "type": "string"
+                },
+                {
+                    "description": "Search parameters",
+                    "name": "params",
+                    "optional": true,
+                    "repeating": true,
+                    "type": "string"
+                }
+            ],
+            "result": {}
+        },
+        {
+            "description": "Gets the number of issues for a particular repo given some search parameters, also adding a hyperlink to the corresponding repo (filtered).",
+            "id": "ISSUECOUNTFORREPOWITHHYPERLINK",
+            "name": "ISSUECOUNTFORREPOWITHHYPERLINK",
+            "parameters": [
+                {
+                    "name": "repo",
+                    "type": "string"
+                },
+                {
+                    "description": "Search parameters",
+                    "name": "params",
+                    "optional": true,
+                    "repeating": true,
+                    "type": "string"
+                }
+            ],
+            "result": {}
+        }
+    ]
+}
