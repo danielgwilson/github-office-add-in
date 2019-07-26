@@ -87,9 +87,9 @@
         <bt:Image id="Icon.80x80" DefaultValue="https://danielgwilson.github.io/github-office-add-in/assets/icon-80.png"/>
       </bt:Images>
       <bt:Urls>
-        <bt:Url id="Functions.Script.Url" DefaultValue="https://danielgwilson.github.io/github-office-add-in/dist/functions.js"/>
-        <bt:Url id="Functions.Metadata.Url" DefaultValue="https://danielgwilson.github.io/github-office-add-in/dist/functions.json"/>
-        <bt:Url id="Functions.Page.Url" DefaultValue="https://danielgwilson.github.io/github-office-add-in/dist/functions.html"/>
+        <bt:Url id="Functions.Script.Url" DefaultValue="https://danielgwilson.github.io/github-office-add-in/functions.js"/>
+        <bt:Url id="Functions.Metadata.Url" DefaultValue="https://danielgwilson.github.io/github-office-add-in/functions.json"/>
+        <bt:Url id="Functions.Page.Url" DefaultValue="https://danielgwilson.github.io/github-office-add-in/functions.html"/>
         <bt:Url id="GetStarted.LearnMoreUrl" DefaultValue="https://github.com/danielgwilson/github-office-add-in"/>
         <bt:Url id="Commands.Url" DefaultValue="https://danielgwilson.github.io/github-office-add-in/commands.html"/>
         <bt:Url id="Taskpane.Url" DefaultValue="https://danielgwilson.github.io/github-office-add-in/taskpane.html"/>
