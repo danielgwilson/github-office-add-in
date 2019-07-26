@@ -1,4 +1,4 @@
-import Octokit from "@octokit/rest";
+import { request } from "@octokit/request";
 import { getTokenViaDialog } from "./getTokenViaDialog";
 
 export const GH = async (endpoint: string) => {
@@ -13,23 +13,60 @@ export const GH = async (endpoint: string) => {
 
 export const searchIssuesForRepo = async (repo: string, params: string[]) => {
   let q = `repo:OfficeDev/${repo}`;
-  q = params ? q.concat("+") : q;
   for (let param of params) {
     q = q.concat(`+${param}`);
   }
 
-  const result = await octokit.search.issues({ q: q });
+  const token = await getAuthToken();
 
-  return result.data.total_count;
+  try {
+    const result = await request(`GET /search/issues?q=:q`, {
+      headers: {
+        authorization: `token ${token}`
+      },
+      q: q
+    });
+    return result.data.total_count;
+  } catch (err) {
+    OfficeRuntime.storage.removeItem("token");
+  }
 };
 
-const getAuthToken = () => {
-  let authToken = "";
-  getTokenViaDialog().then(token => {
-    authToken = token;
+export const getIssueCount = async (
+  repo: string,
+  states: ["OPEN"] | ["CLOSED"] | ["OPEN", "CLOSED"],
+  assignee: string
+) => {
+  const token = await getAuthToken();
+  const result = await request("POST /graphql", {
+    headers: {
+      authorization: `token ${token}`
+    },
+    query: `
+    query($repo:String!, $states:[IssueState!], $assignee:String!) {
+      repository(owner:"OfficeDev", name:$repo) {
+        issues(filterBy: {states:$states, assignee:$assignee}) {
+          totalCount
+        }
+      }
+    }
+    `,
+    variables: {
+      repo: repo,
+      states: states,
+      assignee: assignee
+    }
   });
-
-  return authToken;
+  return result.data.repository.issues.totalCount;
 };
 
-const octokit = new Octokit({ auth: `token ${getAuthToken()}` });
+const getAuthToken = async () => {
+  const token = await OfficeRuntime.storage.getItem("token");
+  if (token) {
+    return token;
+  } else {
+    const newToken = await getTokenViaDialog();
+    OfficeRuntime.storage.setItem("token", newToken);
+    return newToken;
+  }
+};

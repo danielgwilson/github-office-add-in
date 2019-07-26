@@ -31,6 +31,7 @@
     "watch": "webpack --mode development --watch"
   },
   "dependencies": {
+    "@octokit/request": "^5.0.2",
     "@octokit/rest": "^16.28.6",
     "react": "^16.8.6"
   },
