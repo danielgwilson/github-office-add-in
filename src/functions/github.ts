@@ -14,50 +14,28 @@ export const GH = async (endpoint: string) => {
 export const searchIssuesForRepo = async (repo: string, params: string[]) => {
   let q = `repo:OfficeDev/${repo}`;
   for (let param of params) {
-    q = q.concat(`+${param}`);
+    q = q.concat(` ${param}`);
   }
 
   const token = await getAuthToken();
 
-  try {
-    const result = await request(`GET /search/issues?q=:q`, {
-      headers: {
-        authorization: `token ${token}`
-      },
-      q: q
-    });
-    return result.data.total_count;
-  } catch (err) {
-    OfficeRuntime.storage.removeItem("token");
-  }
-};
-
-export const getIssueCount = async (
-  repo: string,
-  states: ["OPEN"] | ["CLOSED"] | ["OPEN", "CLOSED"],
-  assignee: string
-) => {
-  const token = await getAuthToken();
-  const result = await request("POST /graphql", {
+  const response = await request("POST /graphql", {
     headers: {
       authorization: `token ${token}`
     },
     query: `
-    query($repo:String!, $states:[IssueState!], $assignee:String!) {
-      repository(owner:"OfficeDev", name:$repo) {
-        issues(filterBy: {states:$states, assignee:$assignee}) {
-          totalCount
+      query ($q: String!) {
+        search(type: ISSUE, query: $q) {
+          issueCount
         }
       }
-    }
-    `,
+      `,
     variables: {
-      repo: repo,
-      states: states,
-      assignee: assignee
+      q: q
     }
   });
-  return result.data.repository.issues.totalCount;
+
+  return response.data.data.search.issueCount;
 };
 
 const getAuthToken = async () => {
