@@ -1,6 +1,20 @@
-﻿/**
+﻿import { searchIssuesForRepo } from "./github";
+
+/**
+ * Gets the number of issues for a particular repo given some search parameters.
+ * @customfunction
+ * @param repo
+ * @param params Search parameters
+ * @returns The number of issues
+ */
+async function issueCountForRepo(repo: string, params?: string[]) {
+  await console.log(searchIssuesForRepo(repo, params));
+  return await searchIssuesForRepo(repo, params);
+}
+
+/**
  * Adds two numbers.
- * @customfunction 
+ * @customfunction
  * @param first First number
  * @param second Second number
  * @returns The sum of the two numbers.
@@ -11,8 +25,8 @@ function add(first: number, second: number): number {
 
 /**
  * Displays the current time once a second.
- * @customfunction 
- * @param invocation Custom function handler  
+ * @customfunction
+ * @param invocation Custom function handler
  */
 function clock(invocation: CustomFunctions.StreamingInvocation<string>): void {
   const timer = setInterval(() => {
@@ -35,11 +49,14 @@ function currentTime(): string {
 
 /**
  * Increments a value once a second.
- * @customfunction 
+ * @customfunction
  * @param incrementBy Amount to increment
- * @param invocation Custom function handler 
+ * @param invocation Custom function handler
  */
-function increment(incrementBy: number, invocation: CustomFunctions.StreamingInvocation<number>): void {
+function increment(
+  incrementBy: number,
+  invocation: CustomFunctions.StreamingInvocation<number>
+): void {
   let result = 0;
   const timer = setInterval(() => {
     result += incrementBy;
