@@ -1,7 +1,6 @@
-import { clientID, stateString, redirectURI } from "../../ghKeys";
+import { clientID, redirectURI } from "../../ghKeys";
 
 let _dialogOpen = false;
-let _cachedToken = undefined;
 
 /**
  * Function retrieves a cached token or opens a dialog box if there is no saved token. Note that this is not a sufficient example of authentication but is intended to show the capabilities of the Dialog object.
@@ -14,10 +13,6 @@ export function getTokenViaDialog(): Promise<string> {
       let count = 0;
       var intervalId = setInterval(function() {
         count++;
-        if (_cachedToken) {
-          resolve(_cachedToken);
-          clearInterval(intervalId);
-        }
         if (count >= timeout) {
           reject("Timeout while waiting for token");
           clearInterval(intervalId);
