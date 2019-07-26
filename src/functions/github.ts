@@ -1,7 +1,5 @@
-import { clientID, clientSecret } from "../../ghKeys";
 import Octokit from "@octokit/rest";
-
-const octokit = new Octokit();
+import { getTokenViaDialog } from "./getTokenViaDialog";
 
 export const GH = async (endpoint: string) => {
   const api = "https://api.github.com/";
@@ -24,3 +22,14 @@ export const searchIssuesForRepo = async (repo: string, params: string[]) => {
 
   return result.data.total_count;
 };
+
+const getAuthToken = () => {
+  let authToken = "";
+  getTokenViaDialog().then(token => {
+    authToken = token;
+  });
+
+  return authToken;
+};
+
+const octokit = new Octokit({ auth: `token ${getAuthToken()}` });
