@@ -21,7 +21,7 @@ export function getTokenViaDialog(): Promise<string> {
     } else {
       _dialogOpen = true;
       OfficeRuntime.displayWebDialog(
-        `https://github.com/login/oauth/authorize?client_id=${clientID}&redirect_uri=${redirectURI}`,
+        `https://github.com/login/oauth/authorize?client_id=${clientID}`,
         {
           height: "50%",
           width: "50%",
