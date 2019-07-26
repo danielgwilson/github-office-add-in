@@ -59,6 +59,11 @@ module.exports = async (env, options) => {
         template: "./src/taskpane/taskpane.html",
         chunks: ["polyfill", "taskpane"]
       }),
+      new HtmlWebpackPlugin({
+        filename: "dialog.html",
+        template: "./src/dialog/dialog.html",
+        chunks: ["polyfill", "dialog"]
+      }),
       new CopyWebpackPlugin([
         {
           to: "taskpane.css",
@@ -74,8 +79,11 @@ module.exports = async (env, options) => {
     devServer: {
       headers: {
         "Access-Control-Allow-Origin": "*"
-      },      
-      https: (options.https !== undefined) ? options.https : await devCerts.getHttpsServerOptions(),
+      },
+      https:
+        options.https !== undefined
+          ? options.https
+          : await devCerts.getHttpsServerOptions(),
       port: process.env.npm_package_config_dev_server_port || 3000
     }
   };

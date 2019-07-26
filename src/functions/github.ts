@@ -1,5 +1,7 @@
-// import Octokit from "@octokit/rest";
-// const octokit = new Octokit();
+import { clientID, clientSecret } from "../../ghKeys";
+import Octokit from "@octokit/rest";
+
+const octokit = new Octokit();
 
 export const GH = async (endpoint: string) => {
   const api = "https://api.github.com/";
@@ -12,13 +14,13 @@ export const GH = async (endpoint: string) => {
 };
 
 export const searchIssuesForRepo = async (repo: string, params: string[]) => {
-  let q = `q=repo:OfficeDev/${repo}`;
+  let q = `repo:OfficeDev/${repo}`;
   q = params ? q.concat("+") : q;
   for (let param of params) {
     q = q.concat(`+${param}`);
   }
 
-  const result = await GH(`search/issues?${q}`);
+  const result = await octokit.search.issues({ q: q });
 
-  return result.total_count;
+  return result.data.total_count;
 };
